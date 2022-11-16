@@ -46,6 +46,10 @@
 	height: 20%;
 }
 
+.thumb-container > .active {
+	border: 5px solid white;
+}
+
 #upBtn {
 	position: absolute;
 	top: 0;

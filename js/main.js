@@ -1,8 +1,7 @@
-//Classi alle img: img-fluid invisible
 const images = [
 	{
 		image: 'img/01.webp',
-		title: "Marvel's Spiderman Miles Morale",
+		title: "Marvel's Spiderman Miles Morales",
 		text: 'Experience the rise of Miles Morales as the new hero masters incredible, explosive new powers to become his own Spider-Man.',
 	},
 	{
@@ -26,7 +25,87 @@ const images = [
 		text: "Marvel's Avengers is an epic, third-person, action-adventure game that combines an original, cinematic story with single-player and co-operative gameplay.",
 	},
 ];
+let activeIndex = 0;
 
-function createSlide() {
+const slideContainerEl = document.querySelector('.slide-container');
+const thumbContainerEL = document.querySelector('.thumb-container');
+const slideArray = slideContainerEl.childNodes;
+const thumbArray = thumbContainerEL.childNodes;
+
+console.log(thumbArray);
+
+const sliderBtns = document.querySelectorAll('button');
+
+function createSlide(array, i) {
 	const slide = document.createElement('div');
+	const slideText = document.createElement('div');
+	slide.classList.add('slide', 'invisible', 'text-light');
+	slideText.classList.add('slide-text');
+
+	const img = document.createElement('img');
+	const h2 = document.createElement('h2');
+	const txt = document.createElement('p');
+
+	img.src = array[i].image;
+	h2.innerText = array[i].title;
+	txt.innerText = array[i].text;
+
+	slideText.append(h2, txt);
+
+	slide.append(img, slideText);
+
+	return slide;
 }
+
+function createImg(array, i) {
+	const thumbImg = document.createElement('img');
+	const imgSrcArray = array.map((element) => element.image);
+	const imgSrc = imgSrcArray[i];
+
+	thumbImg.src = imgSrc;
+	thumbImg.classList.add('img-fluid');
+
+	thumbImg.addEventListener('click', function () {
+		toggleActive(this, 'active');
+	});
+	return thumbImg;
+}
+
+function toggleActive(slide, toAddClass) {
+	slide.classList.toggle(toAddClass);
+}
+
+function changeSlide(btnPressed) {
+	if (btnPressed === 'upBtn') {
+		toggleActive(slideArray[activeIndex], 'invisible');
+		// toggleActive(thumbArray[activeIndex], 'active');
+
+		activeIndex -= 1;
+		if (activeIndex < 0) {
+			activeIndex = slideArray.length - 1;
+		}
+	} else {
+		toggleActive(slideArray[activeIndex], 'invisible');
+		// toggleActive(thumbArray[activeIndex], 'active');
+
+		activeIndex += 1;
+		if (activeIndex > slideArray.length - 1) {
+			activeIndex = 0;
+		}
+	}
+}
+
+for (let i = 0; i < images.length; i++) {
+	slideContainerEl.append(createSlide(images, i));
+	thumbContainerEL.append(createImg(images, i));
+
+	toggleActive(slideArray[activeIndex], 'invisible');
+	// toggleActive(thumbArray[activeIndex], 'active');
+}
+
+sliderBtns.forEach((element) => {
+	element.addEventListener('click', function (e) {
+		changeSlide(e.target.id);
+		toggleActive(slideArray[activeIndex], 'invisible');
+	});
+});
