@@ -78,7 +78,6 @@ function toggleActive(slide, toAddClass) {
 function changeSlide(btnPressed) {
 	if (btnPressed === 'upBtn') {
 		toggleActive(slideArray[activeIndex], 'invisible');
-		// toggleActive(thumbArray[activeIndex], 'active');
 
 		activeIndex -= 1;
 		if (activeIndex < 0) {
@@ -86,7 +85,6 @@ function changeSlide(btnPressed) {
 		}
 	} else {
 		toggleActive(slideArray[activeIndex], 'invisible');
-		// toggleActive(thumbArray[activeIndex], 'active');
 
 		activeIndex += 1;
 		if (activeIndex > slideArray.length - 1) {
@@ -100,7 +98,6 @@ for (let i = 0; i < images.length; i++) {
 	thumbContainerEL.append(createImg(images, i));
 
 	toggleActive(slideArray[activeIndex], 'invisible');
-	// toggleActive(thumbArray[activeIndex], 'active');
 }
 
 sliderBtns.forEach((element) => {
